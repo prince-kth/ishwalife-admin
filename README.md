@@ -10,6 +10,7 @@ The IshwaLife admin panel has been transformed to include specialized features f
 - Essential Authentication Features:
   - Forgot Password functionality
   - Change Password capability
+  - Admin Dynamic Login
 
 ### 2. Dashboard Overview
 The dashboard now displays:
@@ -17,8 +18,8 @@ The dashboard now displays:
 - Recently Generated Reports
 - Statistical Charts showing:
   - User Activity
-  - Report Generation Trends
-  - System Usage Metrics
+  - Total Generated Report 
+
 
 ### 3. Report Generation Process
 #### Main Workflow
@@ -37,6 +38,7 @@ The dashboard now displays:
 ### 4. User Management Section
 - New User Registration
 - User Search Functionality
+- Data Export
 - User Profile Updates
 
 ### 5. Report History Tracking
@@ -44,8 +46,8 @@ The dashboard now displays:
 - Includes:
   - Generation timestamp
   - User details
-  - Report type
-  - Status updates
+
+
 
 ## System Workflow
 
@@ -69,8 +71,4 @@ The dashboard now displays:
                                         [Update History]
 ```
 
-## Best Practices
-1. Always verify user existence
-2. Maintain complete report logs
-3. Regular system monitoring
-4. Proper user data management
+
