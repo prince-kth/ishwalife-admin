@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  name          String
+  birthPlace    String
+  city          String
+  country       String
+  countryCode   String
+  createdAt     DateTime        @default(now())
+  dateOfBirth   DateTime
+  latitude      Float
+  longitude     Float
+  package       PackageType     @default(Basic)
+  phoneNumber   String          @unique
+  status        UserStatus      @default(Active)
+  timeOfBirth   String
+  updatedAt     DateTime        @updatedAt
+  walletBalance Float           @default(0)
+  reports       Report[]
+  reportHistory ReportHistory[]
+  transactions  Transaction[]
+}
+
+model Transaction {
+  id          String            @id @default(uuid())
+  userId      Int
+  amount      Float
+  type        TransactionType
+  status      TransactionStatus @default(pending)
+  timestamp   DateTime          @default(now())
+  description String
+  user        User              @relation(fields: [userId], references: [id])
+}
+
+model Report {
+  id          String       @id @default(uuid())
+  userId      Int
+  type        String
+  generatedAt DateTime     @default(now())
+  status      ReportStatus
+  pdfUrl      String?
+  cost        Float
+  user        User         @relation(fields: [userId], references: [id])
+}
+
+model ReportHistory {
+  id          Int                 @id @default(autoincrement())
+  userId      Int
+  reportType  String
+  reportName  String
+  amount      Float
+  generatedAt DateTime            @default(now())
+  error       String?
+  metadata    Json?
+  pdfUrl      String?
+  status      ReportHistoryStatus @default(completed)
+  user        User                @relation(fields: [userId], references: [id])
+
+  @@index([userId, status])
+  @@index([generatedAt])
+}
+
+model Admin {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String   @unique
+  phoneNumber String   @unique
+  password    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum PackageType {
+  Basic
+  Premium
+}
+
+enum UserStatus {
+  Active
+  Blocked
+}
+
+enum TransactionType {
+  credit
+  debit
+}
+
+enum TransactionStatus {
+  completed
+  pending
+  failed
+}
+
+enum ReportStatus {
+  pending
+  completed
+  failed
+}
+
+enum ReportHistoryStatus {
+  completed
+  generating
+  failed
+}
+
+
